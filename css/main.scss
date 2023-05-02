@@ -1,0 +1,1279 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+::selection {
+  background: #d0b18c; /* WebKit/Blink Browsers */
+  color: #fff;
+}
+::-moz-selection {
+  background: #d0b18c; /* Gecko Browsers */
+  color: #fff;
+}
+
+body {
+  overflow-x: hidden;
+  overflow-y: scroll;
+}
+
+@mixin box($width, $height, $backgroundColor, $borderRadius, $border...) {
+  width: $width;
+  height: $height;
+  background-color: $backgroundColor;
+  border: $border;
+  border-radius: $borderRadius;
+}
+
+@mixin flex($justifyContent, $alignItems, $flexDirection) {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: $justifyContent;
+  align-items: $alignItems;
+  flex-direction: $flexDirection;
+}
+
+// FONTS
+$montserrat: "Montserrat", sans-serif;
+$roboto: "Roboto", sans-serif;
+$openSans: "Open Sans", sans-serif;
+$merry: "Merriweather", serif;
+
+@mixin font($family, $size, $weight, $style, $color) {
+  font-family: $family;
+  font-size: $size;
+  font-weight: $weight;
+  color: $color;
+  font-style: $style;
+}
+
+@mixin for-extra-small-phone-only {
+  @media (max-width: 360px) {
+    @content;
+  }
+}
+@mixin for-small-phone-only {
+  @media (max-width: 480px) {
+    @content;
+  }
+}
+@mixin for-phone-only {
+  @media (max-width: 641px) {
+    @content;
+  }
+}
+@mixin for-tablet-small {
+  @media (max-width: 800px) {
+    @content;
+  }
+}
+@mixin for-tablet-portrait-up {
+  @media (max-width: 961px) {
+    @content;
+  }
+}
+@mixin for-tablet-landscape-up {
+  @media (max-width: 1025px) {
+    @content;
+  }
+}
+@mixin for-desktop-up {
+  @media (max-width: 1280px) {
+    @content;
+  }
+}
+
+// SIDE BAR
+.sideBar {
+  @include box(300px, 100%, rgb(48, 48, 48), null, null);
+  @include for-desktop-up() {
+    @include box(220px, null, null, null, null);
+  }
+  @include for-tablet-portrait-up() {
+    display: none;
+  }
+  overflow: hidden !important;
+  @include flex(space-between, center, column);
+  flex-wrap: nowrap;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 3;
+  &__logo {
+    @include box(200px, 200px, null, null, null);
+    margin: 25px 0 0px 0;
+    @media (max-height: 624px) {
+      margin: 0;
+    }
+  }
+  .sideMenue {
+    @include box(100%, null, null, null, null);
+    @include flex(null, center, column);
+    &__element {
+      @include font($roboto, 12px, null, null, rgb(227, 221, 205));
+      letter-spacing: 3px;
+      margin: 0 0 15px 0;
+      cursor: pointer;
+      padding: 6px 0;
+      position: relative;
+    }
+    &__border {
+      position: absolute;
+      background: none transparent;
+      width: 0px;
+      height: 0px;
+      &--topSide {
+        top: 0;
+        left: 0;
+        height: 1px;
+      }
+      &--bottomSide {
+        bottom: 0;
+        right: 0;
+        height: 1px;
+      }
+      &--menueTopSide,
+      &--menueBottomSide {
+        width: 59px;
+      }
+      &--aboutTopSide,
+      &--aboutBottomSide {
+        width: 84px;
+      }
+      &--gallaryTopSide,
+      &--gallaryBottomSide {
+        width: 76px;
+      }
+      &--contactTopSide,
+      &--contactBottomSide {
+        width: 79px;
+      }
+    }
+  }
+  // SIDE BAR ADDRESS
+  .sideAdd {
+    @include box(100%, null, null, null, null);
+    &__media {
+      @include box(100%, null, null, null, null);
+      @include flex(center, center, null);
+      padding: 10px 0;
+      a {
+        margin: 0 10px;
+        text-decoration: none;
+      }
+    }
+    &__address {
+      @include box(100%, null, null, null, null);
+      @include flex(center, center, column);
+      @include font($roboto, 13px, null, null, #f1ebda);
+      text-align: center;
+      padding: 10px 15px;
+      p {
+        width: 80%;
+        margin: 10px 0;
+      }
+      a {
+        text-decoration: none;
+        color: #c8a374;
+      }
+    }
+  }
+  // BOOK A TABLE BUTTON
+  .sideBookBut {
+    @include box(100%, 100px, #f1ebda, null, null);
+    @include flex(center, center, null);
+    bottom: 0;
+    &__bookLink {
+      text-decoration: none;
+      @include font(null, null, null, null, #303030);
+    }
+    &__text {
+      @include flex(center, center, null);
+      @include box(92.5%, 80%, #f1ebda, null, thin #bfbaae solid);
+      position: relative;
+    }
+    &__border {
+      position: absolute;
+      background: none transparent;
+      width: 0px;
+      height: 0px;
+      &--left {
+        left: 0;
+        bottom: 0;
+        height: 100%;
+        width: 1px;
+      }
+
+      &--top {
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 1px;
+      }
+
+      &--right {
+        right: 0;
+        top: 0;
+        height: 100%;
+        width: 1px;
+      }
+
+      &--bottom {
+        bottom: 0;
+        right: 0;
+        width: 100%;
+        height: 1px;
+      }
+    }
+  }
+}
+
+// SUB NAVIGATION
+.subnav {
+  position: fixed;
+  left: 250px;
+  top: 0;
+  z-index: 1;
+  overflow: hidden;
+  @include box(50px, 100vh, #fff, null, null);
+  @include for-desktop-up() {
+    left: 170px;
+  }
+  @include for-tablet-portrait-up() {
+    display: none;
+  }
+  &__option {
+    writing-mode: tb-rl;
+    transform: rotate(-180deg);
+    @include flex(center, center, null);
+    @include box(100%, null, null, null, none);
+    white-space: nowrap;
+    padding: 20px 10px;
+    cursor: pointer;
+    @include font($montserrat, 12px, null, null, #303030);
+    letter-spacing: 3px;
+    &--evMenu {
+      margin-top: 100px;
+    }
+  }
+  &__border {
+    position: absolute;
+    left: 0;
+    width: 4px;
+    height: 100%;
+    background: #c7a277;
+    cursor: pointer;
+    &--drinks {
+      height: 0;
+    }
+  }
+}
+
+// IMAGE SLIDER
+.imageSlider {
+  @include box(100vw, 100vh, null, null, null);
+  position: relative;
+  overflow-x: hidden;
+  z-index: 2;
+
+  &__ImagesContainer {
+    @include box(100%, 100%, null, null, null);
+    position: absolute;
+    @include flex(null, center, row);
+    flex-wrap: nowrap;
+  }
+  &__text {
+    @include box(null, null, null, null, null);
+    @include flex(null, null, row);
+    flex-wrap: nowrap;
+    @include font($roboto, 50px, 800, null, #fff);
+    @include for-desktop-up() {
+      @include font(null, 40px, null, null, null);
+    }
+    @include for-tablet-portrait-up() {
+      @include font(null, 35px, null, null, null);
+    }
+    @include for-tablet-small() {
+      @include font(null, 30px, null, null, null);
+    }
+    @include for-extra-small-phone-only() {
+      @include font(null, 28px, 500, null, null);
+    }
+    &--1 {
+      background-color: rgba($color: #411524, $alpha: 0.6);
+    }
+    &--2 {
+      background-color: rgba($color: #283535, $alpha: 0.6);
+    }
+    &--3 {
+      background-color: rgba($color: #624f49, $alpha: 0.6);
+    }
+    &--4 {
+      background-color: rgba($color: #4c2f23, $alpha: 0.6);
+    }
+    &--5 {
+      background-color: rgba($color: #6c5641, $alpha: 0.6);
+    }
+    &--6 {
+      background-color: rgba($color: #54301c, $alpha: 0.6);
+    }
+  }
+
+  &__textBox {
+    position: absolute;
+    left: 350px;
+    top: 55%;
+    @include for-desktop-up() {
+      left: 250px;
+    }
+    @include for-tablet-portrait-up() {
+      left: 20px;
+      top: 55%;
+    }
+    @include for-phone-only() {
+      left: 10px;
+    }
+    @include for-extra-small-phone-only() {
+      left: 5px;
+      top: 45%;
+    }
+  }
+
+  &__image {
+    overflow: hidden;
+    @include box(100vw, 100vh, null, null, null);
+    min-width: 100%;
+    background-position: 50% 50%;
+    background-repeat: no-repeat;
+    background-size: 130vw auto;
+    -o-background-size: 130vw auto;
+    -moz-background-size: 130vw auto;
+    -webkit-background-size: 130vw auto;
+    position: relative;
+    @media (max-aspect-ratio: 31129/25000) {
+      background-position: 50% 50%;
+      background-size: "auto 130vw";
+    }
+
+    &--img1 {
+      background-image: url("../images/img1.jpg");
+    }
+    &--img2 {
+      background-image: url("../images/img2.jpg");
+    }
+    &--img3 {
+      background-image: url("../images/img3.jpg");
+    }
+    &--img4 {
+      background-image: url("../images/img4.jpg");
+    }
+    &--img5 {
+      background-image: url("../images/img5.jpg");
+    }
+    &--img6 {
+      background-image: url("../images/img6.jpg");
+    }
+    &--img7 {
+      background-image: url("../images/img1.jpg");
+    }
+  }
+  .sliderController {
+    position: absolute;
+    left: 25%;
+    top: 90%;
+    @include for-tablet-portrait-up() {
+      left: 15px;
+    }
+    &__ul {
+      @include box(250px, null, transparent, null, null);
+      @include flex(space-between, null, null);
+    }
+    &__li {
+      list-style: none;
+      @include box(10px, 10px, null, null, solid white 1px);
+      transform: rotate(45deg);
+      @include flex(center, center, null);
+      cursor: pointer;
+    }
+    &__option {
+      @include box(6px, 6px, #fff, null, null);
+      opacity: 0;
+    }
+  }
+}
+// FIND US BOTTON
+.findUs {
+  display: none;
+  @include for-tablet-portrait-up() {
+    display: block;
+    @include box(100%, 50px, #e9dcb7, null, null);
+    @include flex(center, center, null);
+    @include font($roboto, 17px, thin, null, null);
+    letter-spacing: 1px;
+    z-index: 20;
+  }
+}
+// MENU CONTAINER
+.menuContainer {
+  @include box(100%, null, #f1ebda, null, null);
+  padding: 85px 85px 85px 385px;
+  @include for-desktop-up() {
+    padding: 85px 85px 85px 285px;
+  }
+  @include for-tablet-portrait-up() {
+    padding: 35px 35px 35px 35px;
+  }
+  @include for-phone-only() {
+    padding: 20px 15px;
+  }
+  @include font($roboto, null, null, null, null);
+  overflow: hidden;
+  .table {
+    @include box(100%, null, null, null, null);
+  }
+  .menuHeaderContainer {
+    @include box(100%, null, null, null, null);
+    @include flex(null, null, null);
+    @include for-phone-only() {
+      @include flex(center, center, null);
+    }
+    &__header {
+      @include box(100%, null, null, null, null);
+      @include font($roboto, 30px, null, null, rgb(51, 51, 51));
+      letter-spacing: 3px;
+      padding: 0 15px;
+      margin: 0 0 60px 0;
+    }
+    &__subtitle {
+      @include box(40%, null, null, null, null);
+      @include font($roboto, 15px, 200, italic, #666460);
+      letter-spacing: 1px;
+      padding: 0 15px;
+      @include for-phone-only() {
+        @include box(100%, null, null, null, null);
+        text-align: center;
+        margin: 0 0 15px 0;
+      }
+    }
+    &__rightBox {
+      @include box(50%, null, null, null, null);
+      line-height: 1.4;
+      @include for-phone-only() {
+        @include box(100%, null, null, null, null);
+        text-align: center;
+      }
+      p {
+        @include box(100%, null, null, null, null);
+        @include font($roboto, 16px, 800, null, rgb(61, 61, 61));
+      }
+    }
+  }
+  .tableHeader {
+    @include box(100%, 144px, null, null, null);
+    position: relative;
+    overflow: hidden;
+    &__text {
+      @include box(100%, null, null, null, null);
+      position: absolute;
+      bottom: 15px;
+      @include font($roboto, 17px, 500, null, null);
+      letter-spacing: 1px;
+    }
+    &__line {
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      @include box(0px, 2px, rgb(48, 48, 48), null, null);
+      @include for-tablet-portrait-up() {
+        @include box(100%, 2px, rgb(48, 48, 48), null, null);
+      }
+    }
+  }
+  .tableBody {
+    @include box(100%, null, null, null, null);
+    @include flex(null, null, null);
+    &__cell {
+      padding: 0 15px;
+      margin: 40px 0 0 0;
+      @include box(33.33%, null, null, null, null);
+      @include for-tablet-landscape-up() {
+        @include box(50%, null, null, null, null);
+      }
+      @include for-phone-only() {
+        @include box(100%, null, null, null, null);
+      }
+    }
+    &__mainInfo {
+      @include box(100%, null, null, null, null);
+      @include flex(space-between, null, null);
+      margin: 0 0 25px 0;
+      flex-wrap: nowrap;
+    }
+    &__foodName {
+      letter-spacing: 2px;
+      @include font($roboto, 14px, null, null, rgb(48, 48, 48));
+    }
+    &__price {
+      @include font($roboto, 14px, 600, null, rgb(48, 48, 48));
+      white-space: nowrap;
+      margin: 0 25px 0 0;
+    }
+    &__ingredients {
+      @include box(100%, null, null, null, null);
+      @include font($roboto, 14px, thin, italic, #666460);
+      margin: 0 10px 0 0;
+    }
+  }
+}
+
+// BELOW THE MENUE CONTAINER
+.animationContainer {
+  @include box(100%, null, null, null, null);
+  padding: 0 0 0 300px;
+  @include for-desktop-up() {
+    padding: 0 0 0 200px;
+  }
+  @include for-tablet-portrait-up() {
+    padding: 0px 0px 0px 0px;
+  }
+  .firstRow {
+    @include box(100%, null, #fff, null, null);
+    z-index: 2;
+    padding: 250px 85px 250px 85px;
+    @include for-tablet-portrait-up() {
+      padding: 15px 10px;
+      margin: 100px 0 50px 0;
+    }
+    @include flex(null, null, null);
+    position: relative;
+    &__secondCol {
+      @include box(57%, auto, null, null, null);
+      @include for-tablet-portrait-up() {
+        @include box(100%, auto, null, null, null);
+      }
+    }
+    .firstRowGallary {
+      @include box(100%, auto, null, null, null);
+      overflow: hidden;
+      position: relative;
+      &__image1 {
+        @include box(100%, auto, null, null, null);
+      }
+      &__overlay {
+        @include box(100%, 100%, #f5f4ed, null, null);
+        position: absolute;
+        top: 100%;
+      }
+    }
+    &__text {
+      @include box(30%, null, null, null, null);
+      @include for-desktop-up() {
+        @include box(40%, null, null, null, null);
+      }
+      @include for-tablet-portrait-up() {
+        padding: 25px 25px;
+        text-align: center;
+        @include box(100%, auto, null, null, null);
+        padding: 0;
+        margin: 50px 0 0 0;
+        @include for-phone-only() {
+          margin: 25px 0 0 0;
+        }
+      }
+      letter-spacing: 1px;
+      line-height: 30px;
+      @include font($roboto, 17px, 200, null, #303030);
+      margin: 0 0 10px 0;
+      padding: 0 15px;
+      @include for-phone-only() {
+        @include font(null, 16px, null, null, null);
+        line-height: 25px;
+      }
+    }
+    &__leaf {
+      @include box(50px, 50px, null, null, null);
+      margin: 50px 0 0 0;
+      right: 60%;
+    }
+  }
+  .secondRow {
+    @include box(100%, null, #fff, null, null);
+    padding: 15px 85px 0px 85px;
+    margin: 250px 0 250px 0;
+    @include for-tablet-portrait-up() {
+      padding: 15px 10px;
+      margin: 50px 0;
+    }
+    @include flex(null, null, null);
+    &__bone {
+      @include box(40%, 230px, null, null, null);
+      @include for-tablet-portrait-up() {
+        @include box(100%, 230px, null, null, null);
+      }
+      @include flex(center, null, null);
+      position: relative;
+      p {
+        text-align: center;
+        @include box(240px, null, null, null, null);
+        @include font($merry, 12px, null, italic, #303030);
+        position: absolute;
+        top: 250px;
+        opacity: 0;
+        @include for-tablet-portrait-up() {
+          top: 230px;
+          opacity: 1;
+        }
+      }
+      img {
+        @include box(125px, 200px, null, null, null);
+        opacity: 0.85;
+        position: absolute;
+      }
+    }
+    &__secondCol {
+      @include box(60%, null, null, null, null);
+      padding: 200px 0 0 0;
+      @include for-tablet-portrait-up() {
+        @include box(100%, null, null, null, null);
+        padding: 35px 0 0 0;
+        margin: 100px 0 0 0;
+      }
+      .secondRowGallary {
+        @include box(100%, auto, null, null, null);
+        overflow: hidden;
+        position: relative;
+        @include for-tablet-portrait-up() {
+        }
+        &__image1 {
+          @include box(100%, auto, null, null, null);
+        }
+        &__overlay {
+          @include box(100%, 100%, #f5f4ed, null, null);
+          position: absolute;
+          top: 100%;
+        }
+      }
+    }
+    &__text {
+      @include box(100%, null, null, null, null);
+      letter-spacing: 1px;
+      line-height: 30px;
+      @include font($roboto, 17px, 200, null, #303030);
+      margin: 50px 0 10px 0;
+
+      padding: 0 15px;
+      @include for-tablet-portrait-up() {
+        padding: 0;
+        text-align: center;
+      }
+      @include for-phone-only() {
+        @include font(null, 16px, null, null, null);
+        margin: 25px 0 0 0;
+        line-height: 25px;
+      }
+    }
+  }
+  .thirdRow {
+    @include box(100%, null, #fff, null, null);
+    padding: 0px 0 0 0;
+    margin: 350px 0 250px 0;
+    @include for-tablet-portrait-up() {
+      padding: 0;
+      margin: 50px 0;
+    }
+    @include flex(null, null, null);
+    position: relative;
+    &__gallaryContainer {
+      @include box(75%, 580px, null, null, null);
+      @include for-tablet-portrait-up() {
+        @include box(100%, auto, null, null, null);
+      }
+      z-index: 2;
+      .thirdRowGallary {
+        @include box(100%, auto, null, null, null);
+        margin: 200px 0 0 0;
+        position: relative;
+        overflow: hidden;
+        @include for-tablet-portrait-up() {
+          @include box(100%, auto, null, null, null);
+          margin: 100px 0 0 0;
+        }
+        &__image1 {
+          @include box(100%, auto, null, null, null);
+        }
+        &__overlay {
+          @include box(100%, 100%, #f5f4ed, null, null);
+          position: absolute;
+          top: 100%;
+          z-index: 2;
+        }
+      }
+    }
+    &__text {
+      @include box(90%, null, null, null, null);
+      line-height: 30px;
+      @include font($roboto, 17px, 200, null, #303030);
+      padding: 0 15px;
+      @include for-tablet-portrait-up() {
+        @include box(100%, null, null, null, null);
+        text-align: center;
+        padding: 0;
+      }
+      @include for-phone-only() {
+        @include font(null, 16px, null, null, null);
+        line-height: 25px;
+      }
+    }
+    &__leaf {
+      @include box(50px, 50px, null, null, null);
+      position: absolute;
+      top: 0;
+      right: 0;
+      @include for-tablet-portrait-up() {
+        margin-top: 50px;
+        position: static;
+      }
+    }
+    &__animateBackgroundContainer {
+      @include box(600px, 600px, null, null, null);
+      background-image: url("../images/movingBackground1.jpg");
+      background-size: 100%;
+      position: absolute;
+      background-position: 49% 50%;
+      background-attachment: fixed;
+      top: 0;
+      right: 0;
+      @include for-tablet-portrait-up() {
+        display: none;
+      }
+    }
+    &__underGallaryContainer {
+      @include box(100%, null, null, null, null);
+      padding: 0 0 0 70px;
+      margin: 50px 0 10px 0;
+      position: relative;
+      @include flex(null, null, null);
+      @include for-desktop-up() {
+        padding: 0 0 0 15px;
+      }
+      @include for-tablet-portrait-up() {
+        padding: 0;
+        @include flex(center, center, null);
+      }
+      @include for-phone-only() {
+        margin: 25px 0 0 0;
+      }
+    }
+  }
+  .fourthRow {
+    @include box(100%, null, #fff, null, null);
+    padding: 0 0 15px 0;
+    margin: 100px 0 250px 0;
+    @include flex(null, null, null);
+    position: relative;
+    @include for-tablet-portrait-up() {
+      @include flex(center, center, null);
+      margin: 100px 0 50px 0;
+    }
+    .fourthRowGallary {
+      @include box(40%, auto, null, null, null);
+      margin: 300px 0 0 0;
+      position: relative;
+      overflow: hidden;
+      @include for-tablet-portrait-up() {
+        display: none;
+      }
+      &__image1 {
+        @include box(100%, auto, null, null, null);
+      }
+      &__overlay {
+        @include box(100%, 100%, #f5f4ed, null, null);
+        position: absolute;
+        top: 100%;
+        z-index: 2;
+      }
+    }
+    &__movingHamburger {
+      @include box(null, null, null, null, null);
+      @include flex(null, null, column);
+      position: absolute;
+      right: 30%;
+      @include for-tablet-portrait-up() {
+        @include flex(center, center, column);
+        position: static;
+        margin-bottom: 100px;
+      }
+      img {
+        @include box(180px, null, null, null, null);
+        margin: 0px 0;
+        opacity: 0.85;
+        @include for-tablet-portrait-up() {
+          margin: -31px 0;
+        }
+      }
+      .hamburgerText {
+        text-align: center;
+        @include box(180px, null, null, null, null);
+        @include font($merry, 12px, null, italic, #303030);
+        position: absolute;
+        top: 160px;
+        opacity: 0;
+        margin-left: auto;
+        margin-right: auto;
+        left: 0;
+        right: 0;
+        @include for-tablet-portrait-up() {
+          opacity: 1;
+        }
+      }
+    }
+  }
+  .fifthRow {
+    @include box(100%, null, #fff, null, null);
+    padding: 15px 85px 15px 85px;
+    margin: 150px 0 0 0;
+    @include for-tablet-portrait-up() {
+      padding: 15px 10px;
+      margin: 50px 0;
+    }
+    @include flex(null, null, null);
+    &__textContainer {
+      @include box(50%, null, null, null, null);
+      @include for-tablet-portrait-up() {
+        @include box(100%, null, null, null, null);
+        text-align: center;
+      }
+      img {
+        @include box(50px, 50px, null, null, null);
+        margin: 50px 0 0 0;
+      }
+    }
+    &__additionalTxt {
+      @include for-tablet-portrait-up() {
+        display: block;
+        margin-top: 25px;
+      }
+    }
+    &__text {
+      @include box(100%, null, null, null, null);
+      letter-spacing: 1px;
+      line-height: 30px;
+      @include font($roboto, 17px, 200, null, #303030);
+      margin: 50px 0 10px 0;
+      padding: 0 15px;
+      @include for-tablet-portrait-up() {
+        padding: 0;
+      }
+      @include for-phone-only() {
+        @include font(null, 16px, null, null, null);
+        margin: 25px 0 0 0;
+        line-height: 25px;
+        letter-spacing: 0;
+      }
+    }
+    &__secondCol {
+      z-index: 7;
+      @include box(50%, auto, null, null, null);
+      padding: 150px 0 0 0;
+      overflow: hidden;
+      @include for-tablet-portrait-up() {
+        @include box(100%, auto, null, null, null);
+        padding: 35px 0 0 0;
+      }
+      .fifthRowGallary {
+        @include box(100%, auto, null, null, null);
+        overflow: hidden;
+        position: relative;
+        @include for-tablet-portrait-up() {
+          @include box(100%, auto, null, null, null);
+        }
+        &__image1 {
+          @include box(100%, auto, null, null, null);
+        }
+        &__overlay {
+          @include box(100%, 100%, #f5f4ed, null, null);
+          position: absolute;
+          top: 100%;
+          z-index: 2;
+        }
+      }
+    }
+  }
+}
+.addContainer {
+  @include box(100%, null, #f5f4ed, null, null);
+  @include flex(null, null, null);
+  padding: 150px 85px 200px 385px;
+  @include for-desktop-up() {
+    padding: 150px 0px 200px 235px;
+  }
+  @include for-tablet-portrait-up() {
+    padding: 50px 35px;
+  }
+  @include for-phone-only() {
+    padding: 50px 10px;
+  }
+  .addInfoContainer {
+    @include box(40%, null, null, null, null);
+    @include flex(null, null, column);
+    padding: 0 15px;
+    @include for-tablet-portrait-up() {
+      @include flex(center, center, column);
+      text-align: center;
+      @include box(100%, null, null, null, null);
+    }
+    @include for-phone-only() {
+      padding: 0;
+    }
+    &__address {
+      @include box(305px, 247px, null, null, null);
+      @include flex(center, center, null);
+      padding: 0 15px;
+      @include for-phone-only() {
+        padding: 0;
+        @include box(100%, auto, null, null, null);
+      }
+      h3 {
+        @include box(100%, null, null, null, null);
+        @include font($roboto, 14px, 600, null, #333333);
+        margin: 0 0 25px 0;
+        letter-spacing: 2px;
+      }
+    }
+    &__addrssText {
+      @include box(100%, null, null, null, null);
+      @include font($roboto, 18px, 200, null, #303030);
+      line-height: 40px;
+      margin: 0 0 20px 0;
+      @include for-phone-only() {
+        @include font(null, 16px, null, null, null);
+      }
+      &--smLineHeight {
+        line-height: 25px;
+        text-align: left;
+        @include for-phone-only() {
+          @include flex(center, center, null);
+        }
+      }
+    }
+    &__border {
+      background-color: #c8a374;
+      @include box(100%, 1px, null, null, null);
+      margin: 50px 0 70px 0;
+    }
+  }
+
+  .reservInfo {
+    @include box(null, 170px, null, null, null);
+    @include flex(space-between, null, column);
+    @include font($roboto, 18px, 200, null, #303030);
+    padding: 0 15px;
+    @include for-phone-only() {
+      @include font(null, 16px, null, null, null);
+      padding: 0;
+    }
+    a {
+      @include font($roboto, 19px, 500, null, #303030);
+      transition: all 0.3s;
+      @include for-phone-only() {
+        @include font($roboto, 17px, 500, null, #303030);
+      }
+      &:hover {
+        text-decoration-color: #f5f4ed;
+      }
+    }
+    h3 {
+      @include box(100%, null, null, null, null);
+      @include font($roboto, 14px, 600, null, #333333);
+      margin: 0 0 25px 0;
+      letter-spacing: 2px;
+    }
+  }
+  .mapContainer {
+    @include box(60%, null, null, null, null);
+    @include flex(center, center, null);
+    padding: 0 15px 0 15px;
+    overflow: hidden;
+    @include for-tablet-portrait-up() {
+      @include box(100%, null, null, null, null);
+      margin: 100px 0;
+    }
+    @include for-phone-only() {
+      padding: 0;
+      margin: 50px 0 20px 0;
+    }
+    &__mapFrameImg {
+      z-index: 3;
+      pointer-events: none;
+      position: absolute;
+      @include box(500px, auto, null, null, null);
+      @include for-desktop-up() {
+        @include box(400px, auto, null, null, null);
+      }
+      @include for-tablet-portrait-up() {
+        display: none;
+      }
+    }
+    position: relative;
+    &__mapImage {
+      position: absolute;
+      overflow: hidden;
+      @include box(500px, 500px, null, null, null);
+      @include for-desktop-up() {
+        @include box(400px, 400px, null, null, null);
+      }
+      clip-path: polygon(0% 50%, 50% 0, 100% 50%, 50% 100%);
+      @include for-tablet-portrait-up() {
+        clip-path: none;
+        overflow: visible;
+        @include box(700px, 700px, null, null, null);
+        top: 0;
+        z-index: 2;
+        position: initial;
+        display: block;
+      }
+      @include for-tablet-small() {
+        @include box(600px, 600px, null, null, null);
+      }
+      @include for-phone-only() {
+        @include box(400px, 400px, null, null, null);
+      }
+      @include for-small-phone-only() {
+        @include box(100%, 320px, null, null, null);
+      }
+    }
+  }
+}
+.openInMap {
+  @include box(238px, 57px, null, null, null);
+  position: relative;
+  @include flex(center, center, null);
+  cursor: pointer;
+  a {
+    @include font($roboto, 13px, 200, null, #333333);
+    text-decoration: none;
+    letter-spacing: 2px;
+    padding: 8px;
+  }
+  img {
+    position: absolute;
+    top: -20px;
+    left: 105px;
+    @include box(30px, 30px, null, null, null);
+  }
+  &__border {
+    position: absolute;
+    background: none transparent;
+    width: 0px;
+    height: 0px;
+    &--left {
+      left: 0;
+      bottom: 0;
+      height: 57px;
+      width: 1px;
+      @include for-tablet-portrait-up() {
+        background: rgb(48, 48, 48);
+      }
+    }
+
+    &--topRight {
+      top: 0;
+      right: 0;
+      width: 95px;
+      height: 1px;
+      @include for-tablet-portrait-up() {
+        background: rgb(48, 48, 48);
+      }
+    }
+    &--topLeft {
+      top: 0;
+      left: 0;
+      width: 95px;
+      height: 1px;
+      @include for-tablet-portrait-up() {
+        background: rgb(48, 48, 48);
+      }
+    }
+    &--right {
+      right: 0;
+      top: 0;
+      height: 57px;
+      width: 1px;
+      @include for-tablet-portrait-up() {
+        background: rgb(48, 48, 48);
+      }
+    }
+
+    &--bottom {
+      bottom: 0;
+      right: 0;
+      width: 238px;
+      height: 1px;
+      @include for-tablet-portrait-up() {
+        background: rgb(48, 48, 48);
+      }
+    }
+    &--boldLeft {
+      left: 0;
+      bottom: 0;
+      height: 57px;
+      width: 3px;
+    }
+
+    &--boldTopRight {
+      top: 0;
+      left: 143px;
+      width: 95px;
+      height: 3px;
+    }
+    &--boldTopLeft {
+      top: 0;
+      left: 0;
+      width: 95px;
+      height: 3px;
+    }
+    &--boldRight {
+      right: 0;
+      top: 0;
+      height: 57px;
+      width: 3px;
+    }
+
+    &--boldBottom {
+      bottom: 0;
+      right: 0;
+      width: 238px;
+      height: 3px;
+    }
+  }
+}
+// FOOTER
+.footerContent {
+  @include box(100%, null, #e5e3d6, null, null);
+  padding: 35px 120px 35px 420px;
+  @include flex(space-between, center, null);
+  @include font($roboto, 13px, 200, null, #303030);
+  @include for-phone-only() {
+    text-align: center;
+    @include flex(space-between, center, column);
+  }
+  a {
+    @include font($roboto, 13px, 500, null, #303030);
+  }
+  @include for-desktop-up() {
+    padding: 35px 100px 35px 300px;
+  }
+  @include for-tablet-landscape-up() {
+    padding: 35px 80px 35px 280px;
+  }
+  @include for-tablet-portrait-up() {
+    padding: 35px;
+  }
+  @include for-tablet-small() {
+    padding: 35px 20px;
+  }
+  @include for-phone-only() {
+    padding: 35px 10px;
+  }
+  &__socialMediaIcons {
+    @include box(140px, null, null, null, null);
+    @include flex(space-between, center, null);
+    @include for-tablet-portrait-up() {
+      padding: 15px 0;
+    }
+    a {
+      text-decoration: none;
+    }
+    i {
+      transition: all 0.7s;
+      &:hover {
+        color: #303030;
+      }
+    }
+  }
+}
+
+//PHONE NAVBAR
+.phoneNavbar {
+  display: none;
+  @include for-tablet-portrait-up() {
+    @include box(100%, 50px, #303030, null, null);
+    z-index: 30;
+    @include flex(center, center, null);
+    position: fixed;
+    top: 0;
+    overflow: hidden;
+    &__logo {
+      position: absolute;
+      top: 13px;
+      width: 120px;
+      height: auto;
+    }
+    &__ContentContainer {
+      @include box(100%, 100%, null, null, null);
+      margin: 50px 0 0 0;
+      @include flex(space-between, center, null);
+    }
+    &__menuContainer {
+      @include box(100%, null, null, null, null);
+      @include flex(center, center, null);
+      text-align: center;
+      ul {
+        li {
+          list-style: none;
+          @include font($roboto, 12px, null, null, rgb(227, 221, 205));
+          letter-spacing: 3px;
+          margin: 0 0 20px 0;
+        }
+      }
+    }
+    &__listOptions {
+      opacity: 0;
+    }
+    &__addContainer {
+      margin: 0 0 30px 0;
+      @include box(100%, null, null, null, null);
+      @include flex(center, center, column);
+      text-align: center;
+      i {
+        margin: 0 10px;
+      }
+    }
+    &__address {
+      @include font($roboto, 13px, null, null, #f1ebda);
+      margin: 10px 0;
+      p {
+        margin: 10px 0;
+      }
+    }
+    a {
+      text-decoration: none;
+      color: #c8a374;
+    }
+    .hamburgerBar {
+      position: absolute;
+      left: 15px;
+      top: 17px;
+      &__line {
+        @include box(30px, 0.8px, #fff, null, null);
+        margin: 0 0 8px 0;
+      }
+    }
+    .closeBar {
+      position: absolute;
+      left: 15px;
+      top: 0px;
+      opacity: 0;
+      &__line {
+        @include box(30px, 0.8px, #fff, null, null);
+        &--left {
+          transform: rotate(45deg);
+          margin-top: 0.8;
+        }
+        &--right {
+          transform: rotate(-45deg);
+        }
+      }
+    }
+  }
+}
